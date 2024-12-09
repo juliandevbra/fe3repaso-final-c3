@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCharStates } from "../Context/Context";
+import { toast } from "react-toastify";
 
 const Card = ({ char }) => {
   const {
@@ -13,6 +14,11 @@ const Card = ({ char }) => {
 
   const toggleFav = () => {
     dispatch({ type: findFav ? "DELETE_FAV" : "ADD_FAV", payload: char });
+    if (findFav) {
+      toast.error("Quitado de favoritos");
+    } else {
+      toast.success("Agregado a favoritos");
+    }
   };
 
   return (

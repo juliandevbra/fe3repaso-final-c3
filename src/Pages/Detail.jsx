@@ -1,19 +1,20 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getChar } from "../Service/apiCalls";
+import withErrorBoundary from "../withErrorBoundary";
 
 const Detail = () => {
   const [char, setChar] = useState({});
   const params = useParams();
-  console.log(params);
+  // console.log(params);
 
-  const url = "https://rickandmortyapi.com/api/character/" + params.id;
+  const fetchData = async () => {
+    const data = await getChar(params.id);
+    setChar(data);
+  };
 
   useEffect(() => {
-    axios(url).then((res) => {
-      console.log(res.data);
-      setChar(res.data);
-    });
+    fetchData();
   }, []);
 
   return (
@@ -26,4 +27,4 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default withErrorBoundary(Detail);
